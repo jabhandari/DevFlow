@@ -2,6 +2,16 @@
 
 > Full-stack starter project with a Vite + React client and an Express/MongoDB server.
 
+
+## Screenshots
+
+### Daily Log Form
+![devflow screenshot](./screenshots/form.png)
+
+### Saved Entries View
+![Saved Entries](./screenshots/entries.png)
+
+
 ## Project structure
 
 - `client/` — Vite + React frontend
