@@ -1,97 +1,167 @@
-# Devflow
+<br />
+<p align="center">
 
-> Full-stack starter project with a Vite + React client and an Express/MongoDB server.
+<h3 align="center">DevFlow</h3>
 
+<p align="center">
+A developer productivity application to track daily progress and manage development logs.
+<br/>
+<br/>
+Log your work. Track your progress. Stay consistent.
+<br/>
+<br/>
+·
+<a href="https://github.com/jabhandari/devflow/issues">Report Bug</a>
+·
+<a href="https://github.com/jabhandari/devflow/issues">Request Feature</a>
 
-## Screenshots
+</p>
+</p>
 
-### Daily Log Form
-![devflow screenshot](./screenshots/form.png)
+---
 
-### Saved Entries View
-![Saved Entries](./screenshots/entries.png)
+## About The Project
 
+DevFlow is a **full-stack developer productivity application** built with the **MERN stack (MongoDB, Express, React, Node.js)**.
 
-## Project structure
+The platform allows developers to log daily development work, track progress entries, and manage development logs through a simple and responsive interface.
 
-- `client/` — Vite + React frontend
-- `server/` — Express backend with Mongoose models
+---
 
-## Prerequisites
+## Built With
 
-- Node.js (16+ recommended)
+Frontend  
+- React  
+- Vite  
+- JavaScript  
+- CSS  
+
+Backend  
+- Node.js  
+- Express.js  
+- Mongoose  
+
+Database  
+- MongoDB  
+
+Other Tools  
+- Axios  
+- JSON Web Token (JWT)  
+- Nodemon  
+
+---
+
+## Features
+
+### Daily Development Log
+Developers can log daily work and track progress.
+
+![DevFlow Form](./screenshots/form.png)
+
+---
+
+### Saved Entries Dashboard
+View and manage all previously saved entries.
+
+![DevFlow Entries](./screenshots/entries.png)
+
+---
+
+## Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+
+Make sure you have:
+
+- Node.js
 - npm
-- MongoDB (local or Atlas)
+- MongoDB
 
-## Install
+Download Node.js from:  
+https://nodejs.org/
 
-Install dependencies for both client and server:
+---
+
+### Installation
+
+Clone the repository
 
 ```bash
-cd client
-npm install
+git clone https://github.com/jabhandari/devflow.git
+cd devflow
+```
 
-# in another terminal
+Install backend dependencies
+
+```bash
 cd server
 npm install
 ```
 
-## Run
+Install frontend dependencies
 
-Start the client (Vite dev server):
+```bash
+cd client
+npm install
+```
+
+---
+
+### Running the Project
+
+Start the backend server
+
+```bash
+cd server
+npm run dev
+```
+
+Start the frontend
 
 ```bash
 cd client
 npm run dev
 ```
 
-Start the server (Express):
+Open the application at
 
-```bash
-cd server
-npm run dev   # uses nodemon for development
-# or
-npm start     # to run with node
+```
+http://localhost:5173
 ```
 
-The client runs on Vite's default port (usually `5173`) and the server runs on the port configured in `server.js` or your environment.
+---
 
-## Environment variables
+## Environment Variables
 
-Create a `.env` file in `server/` with at least the following variables:
+Create a `.env` file inside the `server` folder:
 
-- `MONGO_URI` — MongoDB connection string
-- `JWT_SECRET` — secret for signing JWTs
-- `PORT` — (optional) server port
-
-## API
-
-API routes are defined under `server/routes/`.
-
-- Authentication endpoints: `server/routes/authRoutes.js`
-- Entry endpoints: `server/routes/entryRoutes.js`
-
-Check `server/controllers/` for route handlers and `server/models/` for Mongoose schemas.
-
-## Scripts
-
-- Client
-  - `npm run dev` — start Vite dev server
-  - `npm run build` — build production assets
-  - `npm run preview` — preview production build
-
-- Server
-  - `npm run dev` — start server with `nodemon`
-  - `npm start` — start server with `node`
-
-## Contributing
-
-Open an issue or submit a PR. For quick local development, run the client and server concurrently in separate terminals.
-
-## Next steps / TODOs
-
-- Add example `.env.example`
-- Document key API endpoints with request/response examples
-- Add tests and CI workflow
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+PORT=5000
+```
 
 ---
+
+## API Endpoints
+
+Authentication
+
+- POST `/api/auth/register`
+- POST `/api/auth/login`
+
+Entries
+
+- GET `/api/entries`
+- POST `/api/entries`
+- DELETE `/api/entries/:id`
+
+---
+
+## Author
+
+**Juhi Bhandari**  
+Software Developer  
+Toronto, Canada
