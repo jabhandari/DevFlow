@@ -20,6 +20,7 @@ app.use(express.json());
 
 // routes
 app.use("/auth", require("./routes/authRoutes"));
+app.use("/entries", require("./routes/entryRoutes"));
 
 // test route
 app.get("/", (req, res) => {
