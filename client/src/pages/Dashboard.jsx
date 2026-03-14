@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+console.log("API_URL =", API_URL);
 const fieldConfig = [
   {
     key: "workedOn",
@@ -29,13 +31,13 @@ export default function Dashboard() {
   const [savedMsg, setSavedMsg] = useState("");
 
   async function load() {
-    const res = await fetch("http://localhost:5000/entries");
+const res = await fetch(`${API_URL}/entries`);
     setEntries(await res.json());
   }
 
   async function submit(e) {
     e.preventDefault();
-    await fetch("http://localhost:5000/entries", {
+    await fetch(`${API_URL}/entries`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
