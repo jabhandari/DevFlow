@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://devflow-juhi.vercel.app"
+      "https://dev-flow-6yb1zaw56-juhis-projects-3a794e1f.vercel.app/"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
