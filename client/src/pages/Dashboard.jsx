@@ -1,98 +1,22 @@
 import { useEffect, useState } from "react";
 
-const page = {
-  minHeight: "100vh",
-  background: "#f7f7fb",
-  paddingTop: 100,
-  paddingBottom: 100,
-  paddingLeft: 240,
-  paddingRight: 240,
-  justifyContent: "center",
-  alignItems: "center"
-};
-const centerWrap = {
-  minHeight: "calc(100vh - 48px)", // 24px top + 24px bottom
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const card = {
-  width: "100%",
-  maxWidth: 640,
-  background: "white",
-  border: "1px solid #eee",
-  borderRadius: 16,
-  padding: 50,
-  boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
-};
-
-const header = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 16,
-};
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "160px 1fr 1fr 1fr",
-  gap: 12,
-  alignItems: "start",
-};
-
-const input = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 10,
-  border: "1px solid #ddd",
-  outline: "none",
-  fontSize: 14,
-  boxSizing: "border-box",
-};
-
-const textarea = {
-  ...input,
-  minHeight: 84,
-  resize: "vertical",
-};
-
-const button = {
-  padding: "10px 14px",
-  borderRadius: 10,
-  border: "1px solid #ddd",
-  background: "#111",
-  color: "white",
-  fontWeight: 600,
-  cursor: "pointer",
-};
-
-const pill = {
-  display: "inline-block",
-  padding: "6px 10px",
-  borderRadius: 999,
-  background: "#eef2ff",
-  color: "#3730a3",
-  fontSize: 12,
-  fontWeight: 600,
-};
-
-const th = {
-  textAlign: "left",
-  borderBottom: "1px solid #eaeaea",
-  padding: "12px 10px",
-  background: "#fafafa",
-  fontSize: 13,
-  color: "#333",
-};
-
-const td = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: "12px 10px",
-  verticalAlign: "top",
-  fontSize: 14,
-};
-
+const fieldConfig = [
+  {
+    key: "workedOn",
+    label: "Worked on",
+    placeholder: "Shipped features, fixed issues, reviewed PRs...",
+  },
+  {
+    key: "learned",
+    label: "Learned",
+    placeholder: "New patterns, tools, technical takeaways...",
+  },
+  {
+    key: "blockers",
+    label: "Blockers",
+    placeholder: "Dependencies, unknowns, anything slowing progress...",
+  },
+];
 
 export default function Dashboard() {
   const [entries, setEntries] = useState([]);
@@ -103,7 +27,6 @@ export default function Dashboard() {
     blockers: "",
   });
   const [savedMsg, setSavedMsg] = useState("");
-
 
   async function load() {
     const res = await fetch("http://localhost:5000/entries");
@@ -117,7 +40,7 @@ export default function Dashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
-    setSavedMsg("Saved ✓");
+    setSavedMsg("Saved");
     setTimeout(() => setSavedMsg(""), 1500);
 
     setForm({ ...form, workedOn: "", learned: "", blockers: "" });
@@ -129,101 +52,111 @@ export default function Dashboard() {
   }, []);
 
   return (
-  <div style={page}>
-  <div style={centerWrap}>
-    <div style={card}>
-      <div style={header}>
+    <main className="dashboard-shell">
+      <section className="dashboard-hero">
         <div>
-          <h2 style={{ margin: 0 }}>DevFlow</h2>
-          <p style={{ margin: "6px 0 0", color: "#555" }}>
-            Daily log for work, learning, and blockers.
+          <span className="eyebrow">Daily engineering journal</span>
+          <h1>DevFlow</h1>
+          <p className="hero-copy">
+            Capture progress, learning, and blockers in one clean workspace.
           </p>
         </div>
-      </div>
 
-      {/* form + table goes here */}
-
-
-      {savedMsg && (
-        <p style={{ color: "green", fontWeight: 600, marginTop: 4 }}>
-          {savedMsg}
-        </p>
-      )}
-
-
-      <form onSubmit={submit} style={{marginTop:12}}>
-        <div style={grid}>
-    <div>
-        <input
-          value={form.date}
-          type="date"
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
-        />
-
-        <textarea
-          placeholder="Worked on"
-          value={form.workedOn}
-          onChange={(e) => setForm({ ...form, workedOn: e.target.value })}
-        />
-
-        <textarea
-          placeholder="Learned"
-          value={form.learned}
-          onChange={(e) => setForm({ ...form, learned: e.target.value })}
-        />
-
-        <textarea
-          placeholder="Blockers"
-          value={form.blockers}
-          onChange={(e) => setForm({ ...form, blockers: e.target.value })}
-        />
-
-        <button>Save Entry</button>
+        <div className="hero-panel">
+          <span className="hero-stat-label">Entries tracked</span>
+          <strong className="hero-stat-value">{entries.length}</strong>
+          <p className="hero-stat-copy">
+            A focused snapshot of what moved forward today.
+          </p>
         </div>
-        </div>
-      </form>
+      </section>
 
-      <hr />
+      <section className="dashboard-grid">
+        <article className="panel panel-form">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-kicker">New entry</span>
+              <h2>Log today&apos;s work</h2>
+            </div>
+            <div className="date-chip">{form.date}</div>
+          </div>
 
-      <h3 style={{ marginTop: 24 }}>Saved Entries</h3>
+          <form onSubmit={submit} className="entry-form">
+            <label className="field-group">
+              <span className="field-label">Date</span>
+              <input
+                className="field-input"
+                value={form.date}
+                type="date"
+                onChange={(e) => setForm({ ...form, date: e.target.value })}
+              />
+            </label>
 
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Worked On</th>
-              <th style={th}>Learned</th>
-              <th style={th}>Blockers</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entries.length === 0 ? (
-              <tr>
-                <td style={td} colSpan={4}>
-                  No entries yet.
-                </td>
-              </tr>
-            ) : (
-              entries.map((e) => (
-                <tr key={e._id}>
-                  <td style={td}>{e.date}</td>
-                  <td style={td}>{e.workedOn || "-"}</td>
-                  <td style={td}>{e.learned || "-"}</td>
-                  <td style={td}>{e.blockers || "-"}</td>
+            {fieldConfig.map((field) => (
+              <label className="field-group" key={field.key}>
+                <span className="field-label">{field.label}</span>
+                <textarea
+                  className="field-input field-textarea"
+                  placeholder={field.placeholder}
+                  value={form[field.key]}
+                  onChange={(e) =>
+                    setForm({ ...form, [field.key]: e.target.value })
+                  }
+                />
+              </label>
+            ))}
+
+            <div className="form-footer">
+              <button className="primary-button" type="submit">
+                Save Entry
+              </button>
+              <span className={`status-message${savedMsg ? " visible" : ""}`}>
+                {savedMsg || "Saved"}
+              </span>
+            </div>
+          </form>
+        </article>
+
+        <article className="panel panel-table">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-kicker">History</span>
+              <h2>Saved entries</h2>
+            </div>
+          </div>
+
+          <div className="table-wrap">
+            <table className="entries-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Worked On</th>
+                  <th>Learned</th>
+                  <th>Blockers</th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      
-
-      
-      </div>
-      </div>
-  </div>
-);
-
+              </thead>
+              <tbody>
+                {entries.length === 0 ? (
+                  <tr>
+                    <td className="empty-state" colSpan={4}>
+                      No entries yet.
+                    </td>
+                  </tr>
+                ) : (
+                  entries.map((entry) => (
+                    <tr key={entry._id}>
+                      <td className="date-cell">{entry.date}</td>
+                      <td>{entry.workedOn || "-"}</td>
+                      <td>{entry.learned || "-"}</td>
+                      <td>{entry.blockers || "-"}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  );
 }
