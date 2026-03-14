@@ -19,6 +19,22 @@ Log your work. Track your progress. Stay consistent.
 </p>
 
 ---
+<details>
+<summary><b>Table of Contents</b></summary>
+
+1. [About The Project](#about-the-project)
+2. [Built With](#built-with)
+3. [Features](#features)
+4. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+5. [Running the Project](#running-the-project)
+6. [Environment Variables](#environment-variables)
+7. [API Endpoints](#api-endpoints)
+8. [Author](#author)
+
+</details>
+--
 
 ## About The Project
 
