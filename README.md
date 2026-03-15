@@ -10,13 +10,18 @@
     <br/>
     Log your work. Track your progress. Stay consistent.
     <br/>
+
+    <a href="https://dev-flow-puce.vercel.app/">Check it out!</a>
     <br/>
-    <a href="https://github.com/jabhandari/devflow">View Demo</a>
+    <a href="https://github.com/jabhandari/devflow">View Code</a>
     ·
     <a href="https://github.com/jabhandari/devflow/issues">Report Bug</a>
     ·
     <a href="https://github.com/jabhandari/devflow/issues">Request Feature</a>
   </p>
+</p>
+<p align="centre">
+    **Frontend deployed on Vercel and backend deployed on Render.**
 </p>
 
 <p align="center">
@@ -24,6 +29,8 @@
   <img src="https://img.shields.io/badge/React-Vite-blue" />
   <img src="https://img.shields.io/badge/Node.js-Express-brightgreen" />
   <img src="https://img.shields.io/badge/MongoDB-Database-success" />
+  <img src="https://img.shields.io/badge/Frontend-Vercel-black" />
+  <img src="https://img.shields.io/badge/Backend-Render-6A5ACD" />
 </p>
 
 ---
@@ -38,6 +45,7 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#features">Features</a></li>
+        <li><a href="#deployment">Deployment</a></li>
       </ul>
     </li>
     <li><a href="#project-structure">Project Structure</a></li>
@@ -145,6 +153,17 @@ Key highlights:
 - Scalable project structure
 
 <br/>
+## Deployment
+
+DevFlow is deployed as a full-stack application using separate services for the frontend and backend:
+
+- **Frontend:** deployed on **Vercel**
+- **Backend:** deployed on **Render**
+
+Live Application:  
+[https://dev-flow-puce.vercel.app/](https://dev-flow-puce.vercel.app/)
+
+<br/>
 
 ## Project Structure
 
@@ -164,7 +183,7 @@ devflow
 │   └── server.js
 │
 └── screenshots/           # README screenshots
-
+```
 ## Getting Started
 
 To get a local copy up and running, follow these simple steps.
@@ -206,7 +225,7 @@ npm install
 Install frontend dependencies
 
 ``` bash
-cd client
+cd ../client
 npm install
 ```
 
