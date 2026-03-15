@@ -10,17 +10,12 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://devflow-juhi.vercel.app",
   "https://dev-flow-6yb1zaw56-juhis-projects-3a794e1f.vercel.app",
+  "https://dev-flow-puce.vercel.app"
 ];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error(`Not allowed by CORS: ${origin}`));
-      }
-    },
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
