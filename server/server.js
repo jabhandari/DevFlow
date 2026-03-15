@@ -6,12 +6,21 @@ require("dotenv").config();
 const app = express();
 
 // middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://devflow-juhi.vercel.app",
+  "https://dev-flow-6yb1zaw56-juhis-projects-3a794e1f.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://dev-flow-6yb1zaw56-juhis-projects-3a794e1f.vercel.app/"
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Not allowed by CORS: ${origin}`));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
