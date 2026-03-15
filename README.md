@@ -1,27 +1,29 @@
 <!-- PROJECT HEADER -->
-<br />
+
+<br/>
+
+<h3 align="center">DevFlow</h3>
 
 <p align="center">
-  <h3 align="center">DevFlow</h3>
-
-  <p align="center">
-    A full-stack developer productivity platform built to help developers log daily work, track progress, and stay consistent.
-    <br/>
-    <br/>
-    Log your work. Track your progress. Stay consistent.
-    <br/>
-
-    <a href="https://dev-flow-puce.vercel.app/">Check it out!</a>
-    <br/>
-    <a href="https://github.com/jabhandari/devflow">View Code</a>
-    ·
-    <a href="https://github.com/jabhandari/devflow/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/jabhandari/devflow/issues">Request Feature</a>
-  </p>
+  A full-stack developer productivity platform built to help developers log daily work, track progress, and stay consistent.
 </p>
-<p align="centre">
-    **Frontend deployed on Vercel and backend deployed on Render.**
+
+<p align="center">
+  Log your work. Track your progress. Stay consistent.
+</p>
+
+<p align="center">
+  <a href="https://dev-flow-puce.vercel.app/">Check it out!</a>
+  <br>
+  <a href="https://github.com/jabhandari/devflow">View Code</a>
+  ·
+  <a href="https://github.com/jabhandari/devflow/issues">Report Bug</a>
+  ·
+  <a href="https://github.com/jabhandari/devflow/issues">Request Feature</a>
+</p>
+
+<p align="center">
+  <b>Frontend deployed on Vercel and backend deployed on Render.</b>
 </p>
 
 <p align="center">
