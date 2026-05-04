@@ -23,7 +23,7 @@
   right: min(8vw, 120px);
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(57, 153, 123, 0.22), transparent 68%);
+  background: radial-gradient(circle, var(--color-orb-primary), transparent 68%);
 }
 
 .dashboard-shell::after {
@@ -31,7 +31,91 @@
   bottom: 80px;
   width: 360px;
   height: 360px;
-  background: radial-gradient(circle, rgba(19, 97, 90, 0.16), transparent 70%);
+  background: radial-gradient(circle, var(--color-orb-secondary), transparent 70%);
+}
+
+.theme-control {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  max-width: 1240px;
+  margin: 0 auto 24px;
+}
+
+.theme-label {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.theme-switch {
+  width: 64px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--color-panel-border);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: 0 10px 24px var(--color-switch-shadow);
+}
+
+.theme-switch:hover {
+  transform: translateY(-1px);
+}
+
+.theme-switch:focus-visible {
+  outline: 3px solid rgba(57, 153, 123, 0.28);
+  outline-offset: 3px;
+}
+
+.theme-switch-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-switch-track);
+}
+
+.theme-switch-track::before,
+.theme-switch-track::after {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-switch-icon);
+  transform: translateY(-50%);
+}
+
+.theme-switch-track::before {
+  content: "L";
+  left: 12px;
+}
+
+.theme-switch-track::after {
+  content: "D";
+  right: 11px;
+}
+
+.theme-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-switch-thumb);
+  box-shadow: 0 8px 18px var(--color-switch-shadow);
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.theme-switch[aria-checked="true"] .theme-switch-thumb {
+  transform: translateX(30px);
 }
 
 .dashboard-hero {
@@ -79,9 +163,9 @@
 
 .hero-panel,
 .panel {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(10, 37, 32, 0.08);
-  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  background: var(--color-panel);
+  border: 1px solid var(--color-panel-border);
+  box-shadow: 0 22px 60px var(--color-panel-shadow);
   backdrop-filter: blur(18px);
 }
 
@@ -159,9 +243,9 @@
 .field-input {
   width: 100%;
   padding: 14px 16px;
-  border: 1px solid rgba(12, 50, 43, 0.12);
+  border: 1px solid var(--color-input-border);
   border-radius: 18px;
-  background: rgba(248, 250, 252, 0.92);
+  background: var(--color-input);
   color: var(--color-ink);
   font: inherit;
   box-sizing: border-box;
@@ -176,7 +260,7 @@
   outline: none;
   border-color: rgba(47, 124, 104, 0.55);
   box-shadow: 0 0 0 4px rgba(57, 153, 123, 0.12);
-  background: #ffffff;
+  background: var(--color-input-focus);
   transform: translateY(-1px);
 }
 
@@ -186,7 +270,7 @@
 }
 
 .field-input::placeholder {
-  color: #8b9a96;
+  color: var(--color-placeholder);
 }
 
 .form-footer {
@@ -201,17 +285,21 @@
   padding: 14px 22px;
   border: 0;
   border-radius: 16px;
-  background: linear-gradient(135deg, #123d37 0%, #237062 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-button-start) 0%,
+    var(--color-button-end) 100%
+  );
   color: #ffffff;
   font-weight: 700;
   letter-spacing: 0.01em;
-  box-shadow: 0 14px 30px rgba(18, 61, 55, 0.22);
+  box-shadow: 0 14px 30px var(--color-button-shadow);
 }
 
 .primary-button:hover {
   border: 0;
   transform: translateY(-1px);
-  box-shadow: 0 18px 34px rgba(18, 61, 55, 0.28);
+  box-shadow: 0 18px 34px var(--color-button-shadow-hover);
 }
 
 .status-message {
@@ -234,8 +322,8 @@
 .table-wrap {
   overflow: auto;
   border-radius: 24px;
-  border: 1px solid rgba(12, 50, 43, 0.08);
-  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--color-table-border);
+  background: var(--color-table);
 }
 
 .entries-table {
@@ -254,7 +342,7 @@
 .entries-table th {
   position: sticky;
   top: 0;
-  background: rgba(236, 243, 240, 0.96);
+  background: var(--color-table-head);
   color: var(--color-ink-soft);
   font-size: 0.76rem;
   font-weight: 800;
@@ -263,13 +351,13 @@
 }
 
 .entries-table td {
-  border-top: 1px solid rgba(12, 50, 43, 0.08);
+  border-top: 1px solid var(--color-table-border);
   color: var(--color-body);
   line-height: 1.55;
 }
 
 .entries-table tbody tr:hover {
-  background: rgba(240, 247, 244, 0.68);
+  background: var(--color-table-hover);
 }
 
 .date-cell {
@@ -300,6 +388,10 @@
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 40px;
+  }
+
+  .theme-control {
+    margin-bottom: 20px;
   }
 
   .panel,

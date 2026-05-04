@@ -22,6 +22,17 @@ const fieldConfig = [
 
 export default function Dashboard() {
   const [entries, setEntries] = useState([]);
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("devflow-theme");
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+      return savedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
   const [form, setForm] = useState({
     date: new Date().toISOString().slice(0, 10),
     workedOn: "",
@@ -31,7 +42,7 @@ export default function Dashboard() {
   const [savedMsg, setSavedMsg] = useState("");
 
   async function load() {
-const res = await fetch(`${API_URL}/entries`);
+    const res = await fetch(`${API_URL}/entries`);
     setEntries(await res.json());
   }
 
@@ -50,11 +61,48 @@ const res = await fetch(`${API_URL}/entries`);
   }
 
   useEffect(() => {
-    load();
+    let ignore = false;
+
+    fetch(`${API_URL}/entries`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!ignore) {
+          setEntries(data);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("devflow-theme", theme);
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
+  }
 
   return (
     <main className="dashboard-shell">
+      <div className="theme-control">
+        <span className="theme-label">{theme === "dark" ? "Dark" : "Light"}</span>
+        <button
+          className="theme-switch"
+          type="button"
+          role="switch"
+          aria-checked={theme === "dark"}
+          aria-label="Toggle dark mode"
+          onClick={toggleTheme}
+        >
+          <span className="theme-switch-track">
+            <span className="theme-switch-thumb" />
+          </span>
+        </button>
+      </div>
+
       <section className="dashboard-hero">
         <div>
           <span className="eyebrow">Daily engineering journal</span>
