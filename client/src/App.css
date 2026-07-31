@@ -319,6 +319,10 @@
   transform: translateY(0);
 }
 
+.status-message.error {
+  color: var(--color-error);
+}
+
 .table-wrap {
   overflow: auto;
   border-radius: 24px;

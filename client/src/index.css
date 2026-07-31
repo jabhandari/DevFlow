@@ -21,6 +21,7 @@
   --color-accent-strong: #1f6d5e;
   --color-surface-accent: #e0f0ea;
   --color-success: #18805d;
+  --color-error: #b42318;
   --color-panel: rgba(255, 255, 255, 0.78);
   --color-panel-border: rgba(10, 37, 32, 0.08);
   --color-panel-shadow: rgba(15, 23, 42, 0.08);
@@ -56,6 +57,7 @@
   --color-accent-strong: #6dd8bb;
   --color-surface-accent: rgba(109, 216, 187, 0.12);
   --color-success: #70e0b6;
+  --color-error: #ff8a80;
   --color-panel: rgba(23, 31, 29, 0.8);
   --color-panel-border: rgba(213, 243, 235, 0.1);
   --color-panel-shadow: rgba(0, 0, 0, 0.24);

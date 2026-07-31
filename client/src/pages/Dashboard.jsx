@@ -1,27 +1,14 @@
 import { useEffect, useState } from "react";
+import EntryForm from "../components/EntryForm";
+import EntryTable from "../components/EntryTable";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 console.log("API_URL =", API_URL);
-const fieldConfig = [
-  {
-    key: "workedOn",
-    label: "Worked on",
-    placeholder: "Shipped features, fixed issues, reviewed PRs...",
-  },
-  {
-    key: "learned",
-    label: "Learned",
-    placeholder: "New patterns, tools, technical takeaways...",
-  },
-  {
-    key: "blockers",
-    label: "Blockers",
-    placeholder: "Dependencies, unknowns, anything slowing progress...",
-  },
-];
 
 export default function Dashboard() {
   const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("devflow-theme");
 
@@ -40,36 +27,88 @@ export default function Dashboard() {
     blockers: "",
   });
   const [savedMsg, setSavedMsg] = useState("");
+  const [saveError, setSaveError] = useState("");
+
+  function getRequestErrorMessage(err, fallbackMessage) {
+    return err.message === fallbackMessage ? fallbackMessage : "Network error";
+  }
 
   async function load() {
-    const res = await fetch(`${API_URL}/entries`);
-    setEntries(await res.json());
+    setLoading(true);
+    setLoadError("");
+
+    try {
+      const res = await fetch(`${API_URL}/entries`);
+
+      if (!res.ok) {
+        throw new Error("Failed to load entries");
+      }
+
+      setEntries(await res.json());
+    } catch (err) {
+      setLoadError(getRequestErrorMessage(err, "Failed to load entries"));
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function submit(e) {
     e.preventDefault();
-    await fetch(`${API_URL}/entries`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    setSavedMsg("Saved");
-    setTimeout(() => setSavedMsg(""), 1500);
+    setSaveError("");
+    setSavedMsg("");
 
-    setForm({ ...form, workedOn: "", learned: "", blockers: "" });
-    load();
+    try {
+      const res = await fetch(`${API_URL}/entries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save entry");
+      }
+
+      setSavedMsg("Saved");
+      setTimeout(() => setSavedMsg(""), 1500);
+
+      setForm({ ...form, workedOn: "", learned: "", blockers: "" });
+      load();
+    } catch (err) {
+      setSaveError(getRequestErrorMessage(err, "Failed to save entry"));
+    }
   }
 
   useEffect(() => {
     let ignore = false;
 
-    fetch(`${API_URL}/entries`)
-      .then((res) => res.json())
-      .then((data) => {
+    async function loadEntries() {
+      setLoading(true);
+      setLoadError("");
+
+      try {
+        const res = await fetch(`${API_URL}/entries`);
+
+        if (!res.ok) {
+          throw new Error("Failed to load entries");
+        }
+
+        const data = await res.json();
+
         if (!ignore) {
           setEntries(data);
         }
-      });
+      } catch (err) {
+        if (!ignore) {
+          setLoadError(getRequestErrorMessage(err, "Failed to load entries"));
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadEntries();
 
     return () => {
       ignore = true;
@@ -122,90 +161,14 @@ export default function Dashboard() {
       </section>
 
       <section className="dashboard-grid">
-        <article className="panel panel-form">
-          <div className="panel-heading">
-            <div>
-              <span className="panel-kicker">New entry</span>
-              <h2>Log today&apos;s work</h2>
-            </div>
-            <div className="date-chip">{form.date}</div>
-          </div>
-
-          <form onSubmit={submit} className="entry-form">
-            <label className="field-group">
-              <span className="field-label">Date</span>
-              <input
-                className="field-input"
-                value={form.date}
-                type="date"
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-              />
-            </label>
-
-            {fieldConfig.map((field) => (
-              <label className="field-group" key={field.key}>
-                <span className="field-label">{field.label}</span>
-                <textarea
-                  className="field-input field-textarea"
-                  placeholder={field.placeholder}
-                  value={form[field.key]}
-                  onChange={(e) =>
-                    setForm({ ...form, [field.key]: e.target.value })
-                  }
-                />
-              </label>
-            ))}
-
-            <div className="form-footer">
-              <button className="primary-button" type="submit">
-                Save Entry
-              </button>
-              <span className={`status-message${savedMsg ? " visible" : ""}`}>
-                {savedMsg || "Saved"}
-              </span>
-            </div>
-          </form>
-        </article>
-
-        <article className="panel panel-table">
-          <div className="panel-heading">
-            <div>
-              <span className="panel-kicker">History</span>
-              <h2>Saved entries</h2>
-            </div>
-          </div>
-
-          <div className="table-wrap">
-            <table className="entries-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Worked On</th>
-                  <th>Learned</th>
-                  <th>Blockers</th>
-                </tr>
-              </thead>
-              <tbody>
-                {entries.length === 0 ? (
-                  <tr>
-                    <td className="empty-state" colSpan={4}>
-                      No entries yet.
-                    </td>
-                  </tr>
-                ) : (
-                  entries.map((entry) => (
-                    <tr key={entry._id}>
-                      <td className="date-cell">{entry.date}</td>
-                      <td>{entry.workedOn || "-"}</td>
-                      <td>{entry.learned || "-"}</td>
-                      <td>{entry.blockers || "-"}</td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </article>
+        <EntryForm
+          form={form}
+          savedMsg={savedMsg}
+          saveError={saveError}
+          onChange={setForm}
+          onSubmit={submit}
+        />
+        <EntryTable entries={entries} loading={loading} error={loadError} />
       </section>
     </main>
   );
